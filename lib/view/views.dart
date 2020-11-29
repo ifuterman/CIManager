@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ci_manager/controller.dart';
+
+enum LeftListViewID{
+  ITEM_PATIENTSLIST,
+  ITEM_SCHEDULE,
+  ITEM_USER,
+  ITEM_PROTOCOLS
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -44,7 +52,10 @@ class MainHorizontalLayout extends StatelessWidget {
               color: Colors.black,
               child: new MainViewLeftList(),
             ),
-            flex: 1)
+            flex: 1),
+        Expanded(
+          child: new MainViewRightScreen(),
+        flex: 4,)
       ],
     );
   }
@@ -56,76 +67,107 @@ class MainViewLeftList extends StatefulWidget {
 }
 
 class _MainViewLeftListState extends State<MainViewLeftList> {
-  Key _selectedKey;
+  LeftListViewID _selectedID;
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
         ListTileTheme(
-          selectedColor: Colors.black,
-          selectedTileColor: Colors.white,
+//          selectedColor: Colors.black,
+//          selectedTileColor: Colors.white,
           child: Material(
-            color: Colors.black,
+            color: _selectedID == LeftListViewID.ITEM_USER ? Colors.blue : Colors.black,
             textStyle: TextStyle(color: Colors.white),
             child: ListTile(
-              key: new Key("MainViewLeftList_Item1"),
               title: Text(
-                "Item 1",
+                'MAINVIEWLEFTLIST_ITEM_USER_TITLE'.tr(),
                 style: TextStyle(color: Colors.white),
               ),
               hoverColor: Colors.blue,
-              onTap: () {},
+              onTap: () {
+                _selectedID = LeftListViewID.ITEM_USER;
+                setState(() { Controller().viewRegime = RightViewRegime.REGIME_USER; });
+              },
             ),
           ),
         ),
         ListTileTheme(
-            textColor: Colors.white,
-            selectedColor: Colors.black,
-            selectedTileColor: Colors.white,
-            tileColor: Colors.black,
-            child: Material(
-                child: ListTile(
-              title: Text("Item 2"),
-              hoverColor: Colors.blue,
-            ))),
-        ListTileTheme(
-            textColor: Colors.white,
-            selectedColor: Colors.black,
-            selectedTileColor: Colors.white,
-            tileColor: Colors.black,
+          child: Material(
+            color: _selectedID == LeftListViewID.ITEM_PATIENTSLIST ? Colors.blue : Colors.black,
+            textStyle: TextStyle(color: Colors.white),
             child: ListTile(
-              title: Text("Item 3"),
+              title: Text(
+                'MAINVIEWLEFTLIST_ITEM_PATIENTSLIST_TITLE'.tr(),
+                style: TextStyle(color: Colors.white),
+              ),
               hoverColor: Colors.blue,
-            )),
-        Material(
-          child: ListTile(
-            hoverColor: Colors.amber,
-            onTap: () {},
-            title: Text("item4"),
+              onTap: () {
+                _selectedID = LeftListViewID.ITEM_PATIENTSLIST;
+                setState(() { Controller().viewRegime = RightViewRegime.REGIME_PATIENT; });
+              },
+            ),
           ),
-        )
+        ),
+        ListTileTheme(
+          child: Material(
+            color: _selectedID == LeftListViewID.ITEM_SCHEDULE ? Colors.blue : Colors.black,
+            textStyle: TextStyle(color: Colors.white),
+            child: ListTile(
+              title: Text(
+                'MAINVIEWLEFTLIST_ITEM_USER_SCHEDULE_TITLE'.tr(),
+                style: TextStyle(color: Colors.white),
+              ),
+              hoverColor: Colors.blue,
+              onTap: () {
+                _selectedID = LeftListViewID.ITEM_SCHEDULE;
+                setState(() { Controller().viewRegime = RightViewRegime.REGIME_SCHEDULE; });
+              },
+            ),
+          ),
+        ),
+        ListTileTheme(
+          child: Material(
+            color: _selectedID == LeftListViewID.ITEM_PROTOCOLS ? Colors.blue : Colors.black,
+            textStyle: TextStyle(color: Colors.white),
+            child: ListTile(
+              title: Text(
+                'MAINVIEWLEFTLIST_ITEM_USER_PROTOCOLS_TITLE'.tr(),
+                style: TextStyle(color: Colors.white),
+              ),
+              hoverColor: Colors.blue,
+              onTap: () {
+                _selectedID = LeftListViewID.ITEM_PROTOCOLS;
+                setState(() { Controller().viewRegime = RightViewRegime.REGIME_PROTOCOL; });
+              },
+            ),
+          ),
+        ),
       ],
     );
   }
 
-  @override
-  void setState(VoidCallback fn) {}
+/*  @override
+  void setState(VoidCallback fn) => super.setState(fn);*/
 }
 
-class MainViewLeftListItem extends StatefulWidget {
+class MainViewRightScreen extends StatefulWidget
+{
+
   @override
-  createState() => new _MainViewLeftListItemState();
+  State createState() => new _MainViewRightScreenState();
 }
 
-class _MainViewLeftListItemState extends State<MainViewLeftListItem> {
+class _MainViewRightScreenState extends State <MainViewRightScreen>{
+
   @override
   Widget build(BuildContext context) {
-    return Text(
-      "Item", /*style: new TextStyle(color: Colors.white),*/
+    return Container(
+      color: Colors.grey,
     );
   }
 }
+
 /*class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 

@@ -1,10 +1,15 @@
+import 'package:ci_manager/controller.dart';
+import 'package:ci_manager/model.dart';
 import 'package:flutter/material.dart';
 import 'view/views.dart';
+
 
 import 'package:easy_localization/easy_localization.dart';
 
 void main() {
   //runApp(MyApp());
+  Model model = new Model();
+  Controller.initialize(model);
   runApp(
     EasyLocalization(
         supportedLocales: [Locale('ru', 'RU')/*, Locale('de', 'DE')*/],

@@ -22,6 +22,7 @@ environment:
 
 dependencies:
   easy_localization: ^2.3.3
+  singleton: ^0.0.2
   flutter:
     sdk: flutter
 
