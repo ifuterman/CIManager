@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:ci_manager/controller.dart';
-
-enum LeftListViewID{
-  ITEM_PATIENTSLIST,
-  ITEM_SCHEDULE,
-  ITEM_USER,
-  ITEM_PROTOCOLS
-}
+import 'view_model.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -67,7 +61,6 @@ class MainViewLeftList extends StatefulWidget {
 }
 
 class _MainViewLeftListState extends State<MainViewLeftList> {
-  LeftListViewID _selectedID;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +70,7 @@ class _MainViewLeftListState extends State<MainViewLeftList> {
 //          selectedColor: Colors.black,
 //          selectedTileColor: Colors.white,
           child: Material(
-            color: _selectedID == LeftListViewID.ITEM_USER ? Colors.blue : Colors.black,
+            color: viewModel.isMenuItemSelected(LeftListViewID.ITEM_USER) ? Colors.blue : Colors.black,
             textStyle: TextStyle(color: Colors.white),
             child: ListTile(
               title: Text(
@@ -86,7 +79,7 @@ class _MainViewLeftListState extends State<MainViewLeftList> {
               ),
               hoverColor: Colors.blue,
               onTap: () {
-                _selectedID = LeftListViewID.ITEM_USER;
+                viewModel.selectMenuItem(LeftListViewID.ITEM_USER);
                 setState(() { Controller().viewRegime = RightViewRegime.REGIME_USER; });
               },
             ),
