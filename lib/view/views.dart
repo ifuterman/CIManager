@@ -74,20 +74,25 @@ class _MainViewLeftListState extends State<MainViewLeftList> {
             textStyle: TextStyle(color: Colors.white),
             child: ListTile(
               title: Text(
-                'MAINVIEWLEFTLIST_ITEM_USER_TITLE'.tr(),
+                'MAINVIEWLEFTLIST_ITEM_AUTORIZATION_TITLE'.tr(),
                 style: TextStyle(color: Colors.white),
               ),
               hoverColor: Colors.blue,
               onTap: () {
                 viewModel.selectMenuItem(LeftListViewID.ITEM_USER);
-                setState(() { Controller().viewRegime = RightViewRegime.REGIME_USER; });
+//                setState(() { viewModel.viewRegime = RightViewRegime.REGIME_USER; });
+                setState(() {});
               },
+              trailing: Icon(
+                Icons.account_circle,
+                color: viewModel.isAuthorized() ? Colors.green : Colors.red,
+              ),
             ),
           ),
         ),
         ListTileTheme(
           child: Material(
-            color: _selectedID == LeftListViewID.ITEM_PATIENTSLIST ? Colors.blue : Colors.black,
+            color: viewModel.isMenuItemSelected(LeftListViewID.ITEM_PATIENTSLIST) ? Colors.blue : Colors.black,
             textStyle: TextStyle(color: Colors.white),
             child: ListTile(
               title: Text(
@@ -96,42 +101,67 @@ class _MainViewLeftListState extends State<MainViewLeftList> {
               ),
               hoverColor: Colors.blue,
               onTap: () {
-                _selectedID = LeftListViewID.ITEM_PATIENTSLIST;
-                setState(() { Controller().viewRegime = RightViewRegime.REGIME_PATIENT; });
+                viewModel.selectMenuItem(LeftListViewID.ITEM_PATIENTSLIST);
+//                setState(() { viewModel.viewRegime = RightViewRegime.REGIME_PATIENT; });
+                setState(() {});
               },
             ),
           ),
         ),
         ListTileTheme(
           child: Material(
-            color: _selectedID == LeftListViewID.ITEM_SCHEDULE ? Colors.blue : Colors.black,
+            color: viewModel.isMenuItemSelected(LeftListViewID.ITEM_SCHEDULE) ? Colors.blue : Colors.black,
             textStyle: TextStyle(color: Colors.white),
             child: ListTile(
               title: Text(
-                'MAINVIEWLEFTLIST_ITEM_USER_SCHEDULE_TITLE'.tr(),
+                'MAINVIEWLEFTLIST_ITEM_SCHEDULE_TITLE'.tr(),
                 style: TextStyle(color: Colors.white),
               ),
               hoverColor: Colors.blue,
               onTap: () {
-                _selectedID = LeftListViewID.ITEM_SCHEDULE;
-                setState(() { Controller().viewRegime = RightViewRegime.REGIME_SCHEDULE; });
+                viewModel.selectMenuItem(LeftListViewID.ITEM_SCHEDULE);
+//                setState(() { viewModel.viewRegime = RightViewRegime.REGIME_SCHEDULE; });
+                setState(() {});
               },
             ),
           ),
         ),
         ListTileTheme(
           child: Material(
-            color: _selectedID == LeftListViewID.ITEM_PROTOCOLS ? Colors.blue : Colors.black,
+            color: viewModel.isMenuItemSelected(LeftListViewID.ITEM_PROTOCOLS) ? Colors.blue : Colors.black,
             textStyle: TextStyle(color: Colors.white),
             child: ListTile(
               title: Text(
-                'MAINVIEWLEFTLIST_ITEM_USER_PROTOCOLS_TITLE'.tr(),
+                'MAINVIEWLEFTLIST_ITEM_PROTOCOLS_TITLE'.tr(),
                 style: TextStyle(color: Colors.white),
               ),
               hoverColor: Colors.blue,
               onTap: () {
-                _selectedID = LeftListViewID.ITEM_PROTOCOLS;
-                setState(() { Controller().viewRegime = RightViewRegime.REGIME_PROTOCOL; });
+                viewModel.selectMenuItem(LeftListViewID.ITEM_PROTOCOLS);
+//                setState(() { viewModel.viewRegime = RightViewRegime.REGIME_PROTOCOL; });
+                setState(() {});
+              },
+            ),
+          ),
+        ),
+        ListTileTheme(
+          child: Material(
+            color: viewModel.isMenuItemSelected(LeftListViewID.ITEM_SETTINGS) ? Colors.blue : Colors.black,
+            textStyle: TextStyle(color: Colors.white),
+            child: ListTile(
+              trailing: Icon (
+                Icons.settings,
+                color: Colors.white,
+              ),
+              title: Text(
+                'MAINVIEWLEFTLIST_ITEM_SETTINGS_TITLE'.tr(),
+                style: TextStyle(color: Colors.white),
+              ),
+              hoverColor: Colors.blue,
+              onTap: () {
+                viewModel.selectMenuItem(LeftListViewID.ITEM_SETTINGS);
+//                setState(() { viewModel.viewRegime = RightViewRegime.REGIME_PROTOCOL; });
+                setState(() {});
               },
             ),
           ),
