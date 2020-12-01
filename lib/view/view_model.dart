@@ -6,6 +6,8 @@
 }*/
 
 import 'package:flutter/cupertino.dart';
+import 'package:rxdart/rxdart.dart';
+import 'views.dart';
 
 enum LeftListViewID{
   ITEM_PATIENTSLIST,
@@ -22,14 +24,21 @@ class ViewModel {
 
   LeftListViewID _selectedID;
   LeftListViewID get selectedID => _selectedID;
-  set selectedID(LeftListViewID value) => _selectedID = value;
 
-  void selectMenuItem(LeftListViewID id){
+//  set selectedID(LeftListViewID value) => _selectedID = value;
+  Future<void> onMenuItemSelected(LeftListViewID id) async {
+    if(_selectedID == id)
+      return;
     _selectedID = id;
+    onMenuChanged.add(id);
   }
+
   bool isMenuItemSelected(LeftListViewID id) => id == _selectedID ? true : false;
 
   bool _autorized = false;
   bool isAuthorized() => _autorized;
+
+  final BehaviorSubject<LeftListViewID> onMenuChanged = BehaviorSubject<LeftListViewID>.seeded(LeftListViewID.ITEM_USER);
+
 }
 final viewModel = ViewModel();//Типа синглтон

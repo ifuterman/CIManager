@@ -11,15 +11,6 @@ class MyApp extends StatelessWidget {
 //      title: 'Flutter Demo',
       title: 'title'.tr(),
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: new Scaffold(
@@ -33,11 +24,7 @@ class MyApp extends StatelessWidget {
 class MainHorizontalLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    /*return Row(crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Expanded(child: new MainViewLeftList(), flex: 1),
-      ],
-    );*/
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -48,7 +35,7 @@ class MainHorizontalLayout extends StatelessWidget {
             ),
             flex: 1),
         Expanded(
-          child: new MainViewRightScreen(),
+          child: MainViewRightScreen(),
         flex: 4,)
       ],
     );
@@ -79,7 +66,7 @@ class _MainViewLeftListState extends State<MainViewLeftList> {
               ),
               hoverColor: Colors.blue,
               onTap: () {
-                viewModel.selectMenuItem(LeftListViewID.ITEM_USER);
+                viewModel.onMenuItemSelected(LeftListViewID.ITEM_USER);
 //                setState(() { viewModel.viewRegime = RightViewRegime.REGIME_USER; });
                 setState(() {});
               },
@@ -101,7 +88,7 @@ class _MainViewLeftListState extends State<MainViewLeftList> {
               ),
               hoverColor: Colors.blue,
               onTap: () {
-                viewModel.selectMenuItem(LeftListViewID.ITEM_PATIENTSLIST);
+                viewModel.onMenuItemSelected(LeftListViewID.ITEM_PATIENTSLIST);
 //                setState(() { viewModel.viewRegime = RightViewRegime.REGIME_PATIENT; });
                 setState(() {});
               },
@@ -119,7 +106,7 @@ class _MainViewLeftListState extends State<MainViewLeftList> {
               ),
               hoverColor: Colors.blue,
               onTap: () {
-                viewModel.selectMenuItem(LeftListViewID.ITEM_SCHEDULE);
+                viewModel.onMenuItemSelected(LeftListViewID.ITEM_SCHEDULE);
 //                setState(() { viewModel.viewRegime = RightViewRegime.REGIME_SCHEDULE; });
                 setState(() {});
               },
@@ -137,7 +124,7 @@ class _MainViewLeftListState extends State<MainViewLeftList> {
               ),
               hoverColor: Colors.blue,
               onTap: () {
-                viewModel.selectMenuItem(LeftListViewID.ITEM_PROTOCOLS);
+                viewModel.onMenuItemSelected(LeftListViewID.ITEM_PROTOCOLS);
 //                setState(() { viewModel.viewRegime = RightViewRegime.REGIME_PROTOCOL; });
                 setState(() {});
               },
@@ -159,7 +146,7 @@ class _MainViewLeftListState extends State<MainViewLeftList> {
               ),
               hoverColor: Colors.blue,
               onTap: () {
-                viewModel.selectMenuItem(LeftListViewID.ITEM_SETTINGS);
+                viewModel.onMenuItemSelected(LeftListViewID.ITEM_SETTINGS);
 //                setState(() { viewModel.viewRegime = RightViewRegime.REGIME_PROTOCOL; });
                 setState(() {});
               },
@@ -174,14 +161,27 @@ class _MainViewLeftListState extends State<MainViewLeftList> {
   void setState(VoidCallback fn) => super.setState(fn);*/
 }
 
-class MainViewRightScreen extends StatefulWidget
+class MainViewRightScreen extends StatelessWidget
 {
 
   @override
-  State createState() => new _MainViewRightScreenState();
+  Widget build(BuildContext context) {
+    return Container (
+      child: StreamBuilder<LeftListViewID>(
+          stream: viewModel.onMenuChanged,
+          builder: (context, snapshot) => getRightScreenWidget(context, snapshot),
+      )
+    );
+
+  }
+
+  Widget getRightScreenWidget(BuildContext context, AsyncSnapshot<LeftListViewID> snapshot)
+  {
+    return Container(color: Colors.grey);
+  }
 }
 
-class _MainViewRightScreenState extends State <MainViewRightScreen>{
+/*class MainViewRightScreenState extends State <MainViewRightScreen>{
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +189,7 @@ class _MainViewRightScreenState extends State <MainViewRightScreen>{
       color: Colors.grey,
     );
   }
-}
+}*/
 
 /*class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
