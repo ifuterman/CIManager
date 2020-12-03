@@ -22,7 +22,7 @@ class ViewModel {
   RightViewRegime get viewRegime => _viewRegime;
   set viewRegime(RightViewRegime value) =>_viewRegime = value;*/
 
-  LeftListViewID _selectedID;
+  LeftListViewID _selectedID = LeftListViewID.ITEM_USER;
   LeftListViewID get selectedID => _selectedID;
 
 //  set selectedID(LeftListViewID value) => _selectedID = value;
@@ -35,10 +35,20 @@ class ViewModel {
 
   bool isMenuItemSelected(LeftListViewID id) => id == _selectedID ? true : false;
 
-  bool _autorized = false;
-  bool isAuthorized() => _autorized;
+  bool _authorized = false;
+  bool isAuthorized() => _authorized;
 
   final BehaviorSubject<LeftListViewID> onMenuChanged = BehaviorSubject<LeftListViewID>.seeded(LeftListViewID.ITEM_USER);
 
+  UserAuthorizationViewModel _authorizationViewModel = UserAuthorizationViewModel();
+
+  UserAuthorizationViewModel get authorizationViewModel =>
+      _authorizationViewModel;
 }
 final viewModel = ViewModel();//Типа синглтон
+
+class UserAuthorizationViewModel
+{
+  String userName = "";
+  String userPassword = "";
+}
