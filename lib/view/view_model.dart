@@ -5,9 +5,9 @@
   REGIME_PROTOCOL
 }*/
 
-import 'package:flutter/cupertino.dart';
+
 import 'package:rxdart/rxdart.dart';
-import 'views.dart';
+
 
 enum LeftListViewID{
   ITEM_PATIENTSLIST,
@@ -39,11 +39,17 @@ class ViewModel {
   bool isAuthorized() => _authorized;
 
   final BehaviorSubject<LeftListViewID> onMenuChanged = BehaviorSubject<LeftListViewID>.seeded(LeftListViewID.ITEM_USER);
+  final BehaviorSubject<bool> onAuthorizedChanged = BehaviorSubject<bool>.seeded(false);
 
   UserAuthorizationViewModel _authorizationViewModel = UserAuthorizationViewModel();
 
   UserAuthorizationViewModel get authorizationViewModel =>
       _authorizationViewModel;
+  Future authorizeUser() async{
+    //TODO:Implement user authorization
+    _authorized = true;
+    onAuthorizedChanged.add(_authorized);
+  }
 }
 final viewModel = ViewModel();//Типа синглтон
 
