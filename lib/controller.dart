@@ -1,7 +1,11 @@
 import 'package:singleton/singleton.dart';
 import 'model.dart';
 
-
+class CIM_Event {
+  bool isYou(Type t){
+    return this.runtimeType == t ? true : false;
+  }
+}
 
 class Controller {
 

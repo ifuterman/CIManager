@@ -1,13 +1,5 @@
-/*enum RightViewRegime{
-  REGIME_USER,
-  REGIME_PATIENT,
-  REGIME_SCHEDULE,
-  REGIME_PROTOCOL
-}*/
-
-
 import 'package:rxdart/rxdart.dart';
-
+import 'package:ci_manager/controller.dart';
 
 enum LeftListViewID{
   ITEM_PATIENTSLIST,
@@ -15,6 +7,11 @@ enum LeftListViewID{
   ITEM_USER,
   ITEM_PROTOCOLS,
   ITEM_SETTINGS
+}
+
+class LeftViewItemSelected extends CIM_Event{
+  LeftListViewID id;
+  LeftViewItemSelected(this.id);
 }
 
 class ViewModel {
@@ -27,10 +24,13 @@ class ViewModel {
 
 //  set selectedID(LeftListViewID value) => _selectedID = value;
   Future<void> onMenuItemSelected(LeftListViewID id) async {
+    print('ViewModel.onMenuItemSelected');
     if(_selectedID == id)
       return;
     _selectedID = id;
-    onMenuChanged.add(id);
+//    onMenuChanged.add(id);
+    onMenuChanged.add(LeftViewItemSelected(id));
+
   }
 
   bool isMenuItemSelected(LeftListViewID id) => id == _selectedID ? true : false;
@@ -38,7 +38,8 @@ class ViewModel {
   bool _authorized = false;
   bool isAuthorized() => _authorized;
 
-  final BehaviorSubject<LeftListViewID> onMenuChanged = BehaviorSubject<LeftListViewID>.seeded(LeftListViewID.ITEM_USER);
+//  final BehaviorSubject<LeftListViewID> onMenuChanged = BehaviorSubject<LeftListViewID>.seeded(LeftListViewID.ITEM_USER);
+  final BehaviorSubject<CIM_Event> onMenuChanged = BehaviorSubject<CIM_Event>.seeded(LeftViewItemSelected(LeftListViewID.ITEM_USER));
   final BehaviorSubject<bool> onAuthorizedChanged = BehaviorSubject<bool>.seeded(false);
 
   UserAuthorizationViewModel _authorizationViewModel = UserAuthorizationViewModel();
