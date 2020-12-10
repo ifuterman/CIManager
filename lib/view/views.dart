@@ -49,8 +49,9 @@ class MainViewLeftList extends StatefulWidget {
 class _MainViewLeftListState extends State<MainViewLeftList> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<bool>(
-      stream: viewModel.onAuthorizedChanged,
+    return StreamBuilder<ViewEvent>(
+//      stream: viewModel.onAuthorizedChanged,
+      stream: viewModel.onEventRised,
       builder: (context, snapshot) {
         return ListView(
           children: [
@@ -196,20 +197,24 @@ class MainViewRightScreenState extends State<MainViewRightScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: StreamBuilder<LeftListViewID>(
-      stream: viewModel.onMenuChanged,
-      builder: (context, snapshot) => getRightScreenWidget(context, snapshot),
+        child: StreamBuilder<ViewEvent>(
+      stream: viewModel.onEventRised,
+      builder: (context, snapshot) => getRightScreenWidget(context, snapshot.data == null ? InitialisationViewEvent() : snapshot.data),
     ));
   }
 
   Widget getRightScreenWidget(
-      BuildContext context, AsyncSnapshot<LeftListViewID> snapshot) {
-    switch (snapshot.data) {
+      BuildContext context, ViewEvent event) {
+    if(event is!  ItemSelectedViewEvent && event is!  AuthorizationViewEvent &&
+        event is!  InitialisationViewEvent)
+      return Container(color: Colors.grey);
+
+    switch (viewModel.selectedID) {
       case LeftListViewID.ITEM_USER:
         {
-          if (viewModel.isAuthorized()) return getUserSettingsScreen();
+          if (viewModel.isAuthorized())
+            return getUserSettingsScreen();
           return getUserAuthorizationScreen();
-          break;
         }
       default:
         {
@@ -219,7 +224,11 @@ class MainViewRightScreenState extends State<MainViewRightScreen> {
   }
 
   Widget getUserSettingsScreen() {
-    return Container(color: Colors.grey);
+    return Column(
+      children: [
+        
+      ],
+    );
   }
 
   Widget getUserAuthorizationScreen() {
