@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  get: ^3.23.1
   filepicker_windows: ^1.0.0
   rxdart: ^0.22.2
   easy_localization: ^2.3.3

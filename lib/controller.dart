@@ -3,7 +3,7 @@ import 'model.dart';
 
 
 
-class Controller {
+/*class Controller {
 
 
   final Model _model;
@@ -13,4 +13,4 @@ class Controller {
     Singleton.register(this);
   }
 
-}
+}*/
