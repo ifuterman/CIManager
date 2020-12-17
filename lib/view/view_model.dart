@@ -20,7 +20,6 @@ class AlertEvent{}
 class SaveUserInfoAlert extends AlertEvent{}
 
 class ViewEvent{
-
 }
 
 class ItemSelectedViewEvent extends ViewEvent{

@@ -1,24 +1,24 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:easy_localization/easy_localization.dart';
-
+import 'package:ci_manager/CIMUser.dart';
 import 'get_controller.dart';
 
-class CIManagerApp extends StatelessWidget{
-
+class CIManagerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Controller c = Get.put(Controller());
+//    return Scaffold(body: AuthorisationView());
     return Scaffold(
-      body: AuthorisationView()
+      body: Obx(() => c.authorised.value ? MainView() : AuthorisationView())
     );
   }
 }
 
-class AuthorisationView extends StatelessWidget
-{
-
+class AuthorisationView extends StatelessWidget {
+  TextEditingController _controllerLogin = TextEditingController();
+  TextEditingController _controllerPassword = TextEditingController();
+  final Controller controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -38,17 +38,13 @@ class AuthorisationView extends StatelessWidget
                 height: Theme.of(context).textTheme.headline6.fontSize * 1.2,
                 width: Theme.of(context).textTheme.bodyText1.fontSize * 15),
             child: TextField(
-//                controller: _controller_usrename,
+              controller: _controllerLogin,
               textAlignVertical: TextAlignVertical.top,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
               ),
               onChanged: (value) {
 //                  viewModel.authorizationViewModel.userName = value;
-              },
-              onTap: () {
-                //                _controller_usrename.text =
-                //                  viewModel.authorizationViewModel.userName;
               },
             ),
           ),
@@ -62,28 +58,33 @@ class AuthorisationView extends StatelessWidget
                 height: Theme.of(context).textTheme.headline6.fontSize * 1.2,
                 width: Theme.of(context).textTheme.bodyText1.fontSize * 15),
             child: TextField(
-//                controller: _controller_password,
+              controller: _controllerPassword,
               textAlignVertical: TextAlignVertical.top,
               obscureText: true,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
               ),
-              onChanged: (value) {
-//                  viewModel.authorizationViewModel.userPassword = value;
-              },
-              onTap: () {
-//                  _controller_password.text =
-//                      viewModel.authorizationViewModel.userPassword;
-              },
             ),
           ),
           SizedBox(height: 5),
           ElevatedButton(
             child: Text("USERAUTHORIZATIONSCREEN_BUTTON_AUTHORIZE_TITLE".tr()),
+            onPressed: (){
+              CIMUser user = CIMUser(_controllerLogin.text, _controllerPassword.text);
+              controller.authorise(user);
+            },
 //              onPressed: () => viewModel.authorizeUser(),
           ),
         ],
       ),
     );
+  }
+}
+
+class MainView extends StatelessWidget{
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
