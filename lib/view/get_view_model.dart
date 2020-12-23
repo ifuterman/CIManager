@@ -1,3 +1,4 @@
+import 'package:ci_manager/CIMPatient.dart';
 import 'package:get/get.dart';
 
 class AuthorisationViewModel{
@@ -12,4 +13,13 @@ class ConnectionViewModel{
     //TODO:Implement connection check
     connected.value = true;
   }
+}
+
+class PatientsScreenModel{
+  List<PatientItem> patientItems = List();
+}
+
+class PatientItem{
+  CIMPatient patient = CIMPatient();
+  RxBool isExpanded = RxBool(false);
 }
