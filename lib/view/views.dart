@@ -315,11 +315,6 @@ class MainViewRightScreenState extends State<MainViewRightScreen> {
     double labelWidth =
         Theme.of(context).textTheme.bodyText1.fontSize * maxLength.toDouble();
     TextStyle style = Theme.of(context).textTheme.bodyText1;
-    if(!viewModel.userInfoViewModel.isChanged())
-      {
-        _controller_phone.text = viewModel.userInfoViewModel.phoneNumber;
-        _controller_email.text = viewModel.userInfoViewModel.email;
-      }
     return Column(
       children: [
         Row(
@@ -456,8 +451,7 @@ class MainViewRightScreenState extends State<MainViewRightScreen> {
               ),
             )
           ],
-        ),
-        WatchDogContainer(),
+        )
       ],
     );
   }
@@ -465,11 +459,10 @@ class MainViewRightScreenState extends State<MainViewRightScreen> {
   StreamSubscription _itemSelectSubscription;
   @override
   void initState() {
-    _itemSelectSubscription = viewModel.itemSelectController.stream.listen((event) {onLeftItemChanging(event);});
-//    _itemSelectSubscription = viewModel.getItemSelectSubscription(onLeftItemChanging);
+    _itemSelectSubscription = viewModel.getItemSelectSubscription(onLeftItemChanging);
   }
 
-  void onLeftItemChanging(ViewEvent event) {
+  void onLeftItemChanging(ItemPreselectViewEvent event) {
     if(event is! ItemPreselectViewEvent)
       return;
     ItemPreselectViewEvent e = event as ItemPreselectViewEvent;
@@ -477,64 +470,19 @@ class MainViewRightScreenState extends State<MainViewRightScreen> {
       return;
     if(!viewModel.userInfoViewModel.isChanged())
       return;
-    viewModel.onAllert.add(SaveUserInfoAlert());
-  }
-}
-
-
-
-class WatchDogContainer extends Container{
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: StreamBuilder<AlertEvent>(
-        stream: viewModel.onAllert,
-        builder: (context, snapshot) => dispatch(context, snapshot.data),
-      ),
-    );
-  }
-
-  dispatch(BuildContext context, AlertEvent event)
-  {
-    if(event is SaveUserInfoAlert)
-    {
-      showDialog(
-          context: context,
-          builder: (c) => AlertDialog(
-            title: Text("Тестовый диалог"),
-            actions:
-            <Widget>[
-              TextButton(
-                child: Text("YES".tr()),
-                onPressed: () => viewModel.userInfoViewModel.saveUserInfo(),
-              ),
-              TextButton(
-                child: Text("NO".tr()),
-                onPressed: () => viewModel.userInfoViewModel.setChanged(false),
-              )
-            ],
-          ),
-      );
-    }
-      /*showDialog(
-          context: context,
-        builder: () => AlertDialog dialog = AlertDialog(
+    AlertDialog dialog = AlertDialog(
       title: Text("Тестовый диалог"),
-    actions:
-    <Widget>[
-    TextButton(
-    child: Text("Да"),
-  onPressed: () => viewModel.userInfoViewModel.saveUserInfo(),
-    ),
-    TextButton(
-    child: Text("Нет"),
-  onPressed: () {},
-  )
-  ],
-  );,
-      );
-    }*/
-    return Container();
+      actions:
+        <Widget>[
+          TextButton(
+            child: Text("Да"),
+            onPressed: () => viewModel.userInfoViewModel.saveUserInfo(),
+          ),
+          TextButton(
+            child: Text("Нет"),
+            onPressed: () {},
+          )
+        ],
+    );
   }
 }

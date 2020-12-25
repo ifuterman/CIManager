@@ -1,3 +1,4 @@
+import 'package:ci_manager/CIMDataProvider.dart';
 import 'package:ci_manager/CIMUser.dart';
 import 'package:ci_manager/view/get_view_model.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ enum MainMenuItems{
 }
 
 class Controller extends GetxController{
+  CIMDataProvider dataProvider = CIMDataProvider();
   Rx<MainMenuItems> selectedItem = Rx(MainMenuItems.item_patients);
   Rx<CIMViews> currentView = Rx(CIMViews.authorisation_view);
   AuthorisationViewModel authViewModel = AuthorisationViewModel();

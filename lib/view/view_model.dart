@@ -16,9 +16,6 @@ enum LeftListViewID{
   ITEM_SETTINGS
 }
 
-class AlertEvent{}
-class SaveUserInfoAlert extends AlertEvent{}
-
 class ViewEvent{
 }
 
@@ -45,9 +42,10 @@ class ItemPreselectViewEvent extends ViewEvent{
 class ViewModel {
 
   StreamController _itemSelectController = StreamController<ItemPreselectViewEvent>();
+  StreamSubscription getItemSelectSubscription(Function callback(ItemPreselectViewEvent)){
+    return _itemSelectController.stream.listen(callback);
+  }
 
-
-  StreamController get itemSelectController => _itemSelectController;
 
   int getMaxLength(List<String> list){
     int maxLength = 0;
@@ -77,7 +75,6 @@ class ViewModel {
 
   /*final BehaviorSubject<ViewEvent> onMenuChanged = BehaviorSubject<ViewEvent>.seeded(ItemSelectedViewEvent(LeftListViewID.ITEM_USER));
   final BehaviorSubject<ViewEvent> onAuthorizedChanged = BehaviorSubject<ViewEvent>.seeded(AuthorizationViewEvent(false));*/
-  final BehaviorSubject<AlertEvent> onAllert = BehaviorSubject<AlertEvent>();
   final BehaviorSubject<ViewEvent> onEventRised = BehaviorSubject<ViewEvent>();
 
 
