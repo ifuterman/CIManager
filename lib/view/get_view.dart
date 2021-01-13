@@ -406,5 +406,6 @@ class PatientExpansionPanel implements ExpansionPanel{
   }
   @override
   bool get isExpanded => item.isExpanded;
-
+  @override
+  final Color backgroundColor = Colors.white;
 }
